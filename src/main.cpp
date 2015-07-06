@@ -3,6 +3,10 @@
 #include <SFML/OpenGL.hpp>
 
 #include "Shader.hpp"
+#include "Mesh.hpp"
+
+
+using namespace std;
 
 int main()
 {
@@ -10,8 +14,8 @@ int main()
 	unsigned int size = 500;
 
 	sf::ContextSettings glSettings;
-	glSettings.majorVersion = 3;
-	glSettings.minorVersion = 0;
+	glSettings.majorVersion = 4;
+	glSettings.minorVersion = 4;
 
     sf::RenderWindow window(sf::VideoMode(size, size), 
     						"Viewer3d -- SFML / OpenGL Shader", 
@@ -22,11 +26,23 @@ int main()
     window.setFramerateLimit(60);
     
 
-    sf::CircleShape shape(size/2);
+    glClearColor(1.0f,0.0f,1.0f,1.0f);
 
 
-    shape.setFillColor(sf::Color::Green);
+    cout<<"create shaders"<<endl;
+    Shader vertexShader( "../src/shaders/vertexShader.vsh", GL_VERTEX_SHADER );
+    Shader fragmentShader( "../src/shaders/fragmentShader.fsh", GL_FRAGMENT_SHADER );
+    
+    cout<<"create program"<<endl;
+    ShaderProgram prgm;
+    prgm.Make( &vertexShader, &fragmentShader );
 
+
+    cout<<"create mesh"<<endl;
+    Mesh mesh;
+
+
+//*
     bool running = true;
     while (running)
     {
@@ -44,22 +60,17 @@ int main()
 
         }
 
+//*/
 
-
-		Shader shader;
-		shader.SetVertexShader("../src/shaders/vertexShader.vsh");
-		shader.SetFragmentShader("../src/shaders/fragmentShader.vsh");
-		shader.MakeProgram();
-
-
-
+        mesh.Draw( &prgm );
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         window.clear();
-        window.draw(shape);
+        // window.draw(shape);
         window.display();
     }
 
+        cout<<"end"<<endl;
     return EXIT_SUCCESS;
 }
 

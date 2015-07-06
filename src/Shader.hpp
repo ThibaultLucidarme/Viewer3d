@@ -11,29 +11,43 @@ class Shader
 
 private:
 
-	GLint _vertexShaderID;
-	GLint _fragmentShaderID;
-	GLint _shaderProgramID;
+	GLuint _shaderID;
 
-	GLint _vao;
-	GLint _vbo;
-	GLint _indexBuffer;
+	GLuint _vao;
+	GLuint _vbo;
 
 	bool _useUVTexture;
 	bool _useIndexArrayBuffer;
 
 
 	std::string LoadFromFile( std::string filename );
-	GLint MakeShader( std::string filename , GLint vertexType );
+	void Compile( std::string source , GLenum shaderType );
+	// void LoadMeshToGPU( Mesh* mesh, bool useUVTexture=false, bool useIndexArrayBuffer=false );
+
 
 public:
 
-	Shader( void );
-	void SetVertexShader( std::string filename );
-	void SetFragmentShader( std::string filename ); 
-	GLint MakeProgram( void );
-	//void LoadDataToGPU( Mesh* mesh, bool useUVTexture, bool useIndexArrayBuffer );
+	Shader( std::string filename , GLenum vertexType );
+	~Shader( void );
 
+	void Delete( void );
+	GLuint getID( void );
+
+
+};
+
+class ShaderProgram
+{
+
+private: 
+	GLuint _shaderProgramID;
+
+public:
+
+	ShaderProgram( void );
+	~ShaderProgram( void );
+	void Make( Shader* vertexShader, Shader* fragmentShader );
+	void Use( void );
 
 };
 

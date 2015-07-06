@@ -15,7 +15,7 @@ ADD_DEFINITIONS(
     -lsfml-graphics
     -lsfml-window
     -lsfml-system
-
+    -DGL_GLEXT_PROTOTYPES 
 )
 
 # Versioning
@@ -34,7 +34,7 @@ file(GLOB_RECURSE
     )
 
 #add_executable( ${PROJECT_NAME} ${Project_SOURCES} )
-add_executable( ${PROJECT_NAME} src/main.cpp src/Shader.cpp )
+add_executable( ${PROJECT_NAME} src/main.cpp src/Shader.cpp src/Mesh.cpp)
 
 
 ########################### Libraries ##########################################
